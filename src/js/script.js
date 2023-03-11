@@ -19,6 +19,12 @@ const render = function() {
   // Iterate through dataSource.books array
   for (const book of dataSource.books) {
 
+    const ratingBgc = determineRatingBgc(book.rating);
+    const ratingWidth = book.rating * 10;
+
+    book.ratingBgc = ratingBgc;
+    book.ratingWidth = ratingWidth;
+
     // Generate HTML based on template and book data
     const generatedHTML = template(book);
 
@@ -27,6 +33,33 @@ const render = function() {
 
     bookListContainer.appendChild(generatedDOM);
   }
+};
+
+// Add function determineRatingBgc
+const determineRatingBgc = function(rating) {
+
+  let backgroundGradient;
+
+  if (rating <= 6) {
+
+    backgroundGradient = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%);';
+
+  } else if (rating > 6 && rating <= 8) {
+
+    backgroundGradient = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%);';
+
+  } else if (rating > 8 && rating <= 9) {
+
+    backgroundGradient = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%);';
+
+  } else if (rating > 9) {
+
+    backgroundGradient = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%);';
+
+  }
+
+  return backgroundGradient;
+
 };
 
 // Add function applyFilter

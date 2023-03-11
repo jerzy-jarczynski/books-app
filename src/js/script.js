@@ -29,6 +29,71 @@ const render = function() {
   }
 };
 
+// Add function applyFilter
+const filterBooks = function() {
+
+  // Iterate through all dataSource.books elements
+  for (const book of dataSource.books) {
+
+    // Hidden flague, default false
+    let shouldBeHidden = false;
+
+    // Iterate through filters array
+    for (const filter of filters) {
+
+      // Check if book has apropriate category
+      if (!book.details[filter]) {
+
+        // Change flague to true
+        shouldBeHidden = true;
+
+        // Break, no need for more searching after the first finding
+        break;
+
+      }
+
+    }
+
+    // Add reference to all books HTML
+    const bookImages = bookListContainer.querySelectorAll('.book__image');
+
+    // Check if book should be hidden
+    if (shouldBeHidden) {
+
+      // Iterate through book images
+      for (let bookImg of bookImages) {
+
+        // Find apropriate book image
+        if (book.id == bookImg.getAttribute('data-id')) {
+
+          // Add class hidden
+          bookImg.classList.add('hidden');
+
+        }
+
+      }
+
+    } else {
+
+      // Iterate through book images
+      for (let bookImg of bookImages) {
+
+        // Find apropriate book image
+        if (book.id == bookImg.getAttribute('data-id')) {
+
+          // Add class hidden
+          bookImg.classList.remove('hidden');
+
+        }
+
+      }
+
+    }
+
+  }
+
+};
+
 // Add function initActions
 const initActions = function() {
 
@@ -86,11 +151,15 @@ const initActions = function() {
         // Add input value to filters array
         filters.push(clickedElement.value);
 
+        filterBooks();
+
       } else {
 
         // Remove input value from filters array
         const index = filters.indexOf(clickedElement.value);
         filters.splice(index, 1);
+
+        filterBooks();
 
       }
 

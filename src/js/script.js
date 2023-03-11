@@ -20,4 +20,41 @@ const render = function() {
   }
 };
 
+// Run render function
 render();
+
+// Add empty array for favourite books
+const favouriteBooks = [];
+
+// Add reference to all books on page
+const allBooks = document.querySelectorAll('.book__image');
+
+const initActions = function() {
+
+  // Iterate through every book on page
+  for (const book of allBooks) {
+
+    const bookId = book.getAttribute('data-id');
+
+    // Add double click event Listener to book
+    book.addEventListener('dblclick', function(event) {
+      event.preventDefault();
+
+      // Add book ID to favourite books
+      if (!favouriteBooks.includes(bookId)) {
+        favouriteBooks.push(bookId);
+      }
+
+      // Add class favorite to book HTML
+      if (!book.classList.contains('favorite')) {
+        book.classList.add('favorite');
+      }
+
+    });
+
+  }
+
+};
+
+// Run initActions function
+initActions();

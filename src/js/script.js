@@ -4,6 +4,15 @@ const template = Handlebars.compile(document.querySelector('#template-book').inn
 // Add reference to book list container
 const bookListContainer = document.querySelector('.books-list');
 
+// Add an empty array for Favourite Books
+const favouriteBooks = [];
+
+// Add an empty array for Filters
+const filters = [];
+
+// Add reference to filters container
+const filtersContainer = document.querySelector('.filters');
+
 // Add function render
 const render = function() {
 
@@ -20,16 +29,10 @@ const render = function() {
   }
 };
 
-// Run render function
-render();
-
-// Add empty array for favourite books
-const favouriteBooks = [];
-
 // Add function initActions
 const initActions = function() {
 
-  // Add double click event Listener to book
+  // Add double click event Listener to bookListContainer
   bookListContainer.addEventListener('dblclick', function(event) {
 
     // Remove default browser behaviour
@@ -63,7 +66,45 @@ const initActions = function() {
 
   });
 
+  // Add click event listener to filtersContainer
+  filtersContainer.addEventListener('click', function(event) {
+
+    // Add reference to clicked element
+    const clickedElement = event.target;
+
+    // Add reference to clicked element tagName, Type && Name
+    const tag = clickedElement.tagName;
+    const type = clickedElement.getAttribute('type');
+    const name = clickedElement.getAttribute('name');
+    
+    // Check if clicked element is input type checkbox with name filter
+    if (tag == 'INPUT' && type == 'checkbox' && name == 'filter') {
+      
+      // Check if input is checked
+      if (clickedElement.checked) {
+
+        // Add input value to filters array
+        filters.push(clickedElement.value);
+
+      } else {
+
+        // Remove input value from filters array
+        const index = filters.indexOf(clickedElement.value);
+        filters.splice(index, 1);
+
+      }
+
+    }
+
+  });
+
 };
+
+// Run render function
+render();
 
 // Run initActions function
 initActions();
+
+
+

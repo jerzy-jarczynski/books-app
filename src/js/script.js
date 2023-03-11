@@ -26,19 +26,23 @@ render();
 // Add empty array for favourite books
 const favouriteBooks = [];
 
-// Add reference to all books on page
-const allBooks = bookListContainer.querySelectorAll('.book__image');
-
+// Add function initActions
 const initActions = function() {
 
-  // Iterate through every book on page
-  for (const book of allBooks) {
+  // Add double click event Listener to book
+  bookListContainer.addEventListener('dblclick', function(event) {
 
-    const bookId = book.getAttribute('data-id');
+    // Remove default browser behaviour
+    event.preventDefault();
 
-    // Add double click event Listener to book
-    book.addEventListener('dblclick', function(event) {
-      event.preventDefault();
+    // Add reference to clicked element parent
+    const clickedElement = event.target.offsetParent;
+
+    // Check if clicked element is a book element
+    if (clickedElement.classList.contains('book__image')) {
+
+      // Get book data-id attribute value
+      const bookId = clickedElement.getAttribute('data-id');
 
       // Add/remove book ID to/from favourite books
       if (!favouriteBooks.includes(bookId)) {
@@ -49,15 +53,15 @@ const initActions = function() {
       }
 
       // Add/remove class favorite to/from book HTML
-      if (!book.classList.contains('favorite')) {
-        book.classList.add('favorite');
+      if (!clickedElement.classList.contains('favorite')) {
+        clickedElement.classList.add('favorite');
       } else {
-        book.classList.remove('favorite');
+        clickedElement.classList.remove('favorite');
       }
+  
+    }
 
-    });
-
-  }
+  });
 
 };
 
